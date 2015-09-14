@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="880px" height="150px" viewBox="0 0 880 150" enable-background="new 0 0 880 150" xml:space="preserve">
+<g>
+	<rect x="270.97" y="9.528" fill="none" width="597" height="128.944"/>
+	<text transform="matrix(1 0 0 1 270.9697 133.7251)" font-family="'Consolas-Bold'" font-size="180">Mtimer</text>
+	<g>
+		<g>
+			<path fill="#FFBE41" d="M195.856,124.064c-27.605,0-50.064-22.459-50.064-50.064s22.459-50.064,50.064-50.064
+				S245.921,46.395,245.921,74S223.462,124.064,195.856,124.064z"/>
+			<path fill="#FFFFFF" d="M195.856,32.436c22.919,0,41.564,18.646,41.564,41.564c0,22.919-18.646,41.564-41.564,41.564
+				S154.292,96.919,154.292,74C154.292,51.082,172.938,32.436,195.856,32.436 M195.856,15.436c-32.344,0-58.564,26.22-58.564,58.564
+				c0,32.344,26.22,58.564,58.564,58.564c32.344,0,58.564-26.22,58.564-58.564C254.421,41.656,228.2,15.436,195.856,15.436
+				L195.856,15.436z"/>
+		</g>
+		<circle fill="none" stroke="#000000" stroke-width="15" stroke-miterlimit="10" cx="195.856" cy="74" r="58.564"/>
+		<g>
+			
+				<line fill="#FFFFFF" stroke="#000000" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="195.47" y1="48.5" x2="195.47" y2="74.5"/>
+			
+				<line fill="#FFFFFF" stroke="#000000" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="221.97" y1="75" x2="195.97" y2="75"/>
+		</g>
+	</g>
+	<rect x="10.833" y="9.528" fill="none" width="108.476" height="128.944"/>
+	<text transform="matrix(1 0 0 1 20.3433 133.7251)" font-family="'Consolas-Bold'" font-size="180">D</text>
+</g>
+</svg>
