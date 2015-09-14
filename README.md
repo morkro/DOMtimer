@@ -1,4 +1,6 @@
-# ![DOMtimer](https://github.com/morkro/DOMtimer/blob/master/media/domtimer.svg)
+<h1 align="center">
+	<img src="https://cdn.rawgit.com/morkro/DOMtimer/master/media/domtimer-logo.svg" alt="DOMtimer">
+</h1>
 > An easy to `import` ES6 module timer for your DOM.
 
 :loudspeaker: Ever wanted to show the current time in your interfaces? But not only that, a real-time display with handy configuration? Introducing **`DOMtimer`**—a customisable and simple timer for your DOM!
