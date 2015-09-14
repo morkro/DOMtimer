@@ -23,7 +23,7 @@ or if you don't use a package manager, simply download [`domtimer.js`](https://g
 
 In order to use the module, you have to import it to your project.
 
-```
+```javascript
 import DOMtimer from 'path/to/module/domtimer';
 ```
 
@@ -37,7 +37,7 @@ The default will append a **24-hour clock** _(hh:mm:ss)_ to your element with an
 You can either pass a selector string or a valid HTML element to the constructor. Passing none is fine, as long as you specify an element in `.config()` later on. Otherwise you will get an error.
 
 
-```
+```javascript
 // Without anything
 let timer = new DOMtimer();
 
@@ -54,7 +54,7 @@ timer.run();
 
 You can either provide an `options` object to the constructor, or later in `.config()`. Here's an overview of the default options:
 
-```
+```javascript
 DOMtimer(element, {
 	interval: 1000,				// The timer updates the time every second,
 	timeFormat: '24h',			// and uses the 24-hour system, but
@@ -69,7 +69,7 @@ As mentioned earlier, you can also omit the `element` and/or `options` in the co
 ## `.config(options)`
 Here you can pass exactly the same options as in the constructor function, just with an additional **`element`** property.
 
-```
+```javascript
 let timer = new DOMtimer();
 
 timer.config({
@@ -131,7 +131,7 @@ Here is the list of all predefined strings:
 
 **Usage**
 
-```
+```javascript
 let timer = new DOMtimer('.foo-element');
 
 timer.run('minute');
