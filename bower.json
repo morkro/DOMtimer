@@ -1,23 +1,30 @@
 {
-	"name": "domtimer",
-	"description": "An easy to import ES6 module timer for your DOM",
-	"version": "0.1.0",
-	"moduleType": "es6",
-	"keywords": [
-		"es6", "es2015", "timer", "DOM", "domtimer"
-	],
-	"homepage": "https://github.com/morkro/DOMtimer",
-	"authors": [
-		"Moritz Kröger <write@morkro.de> (www.morkro.de)"
-	],
-	"main": "domtimer.js",
-	"ignore": [
-		".editorconfig",
-		".eslintrc",
-		".npmignore",
-		"node_modules",
-		"media",
-		"tests"
-	],
-	"license": "MIT"
+  "name": "domtimer",
+  "description": "An easy to import ES6 module timer for your DOM",
+  "version": "0.1.1",
+  "moduleType": "es6",
+  "keywords": [
+    "es6",
+    "es2015",
+    "timer",
+    "DOM",
+    "domtimer"
+  ],
+  "homepage": "https://github.com/morkro/DOMtimer",
+  "authors": [
+    "Moritz Kröger <write@morkro.de> (www.morkro.de)"
+  ],
+  "main": "domtimer.js",
+  "ignore": [
+    ".editorconfig",
+    ".eslintrc",
+    ".npmignore",
+    "node_modules",
+    "media",
+    "tests"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "domtimer": "~0.1.0"
+  }
 }
