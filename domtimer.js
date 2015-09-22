@@ -107,14 +107,14 @@ export default class DOMtimer {
 	config ({
 		element = this.returnElement(),
 		interval = this.updateTime,
-		timeFormat = this.for8mat,
+		timeFormat = this.format,
 		showAbbreviation = this.abbreviations,
 		showMilliseconds = this.showMilliseconds
 	} = {}) {
 		this.elem = this.returnElement(element);
 		this.updateTime = this.returnIntervalTime(interval);
 		this.format = timeFormat;
-		this.abbreviations = abbreviations;
+		this.abbreviations = showAbbreviation;
 		this.showMilliseconds = showMilliseconds;
 	}
 
