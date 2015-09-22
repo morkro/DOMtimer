@@ -146,7 +146,7 @@ Setting this option to `true` will wrap each time in a `<span>`.
 
 Passing any string will prefix this to each `<span>` time element. You can only use valid CSS selector character. It is possible to use both `addPrefix` and `addSuffix` together.
 
-`timer.options({ wrapEach: true, addPrefix: 'element__' })` will output:
+`timer.config({ wrapEach: true, addPrefix: 'element__' })` will output:
 
 ```html
 <div class="foo-element">
@@ -161,7 +161,7 @@ Passing any string will prefix this to each `<span>` time element. You can only 
 
 Passing any string will add this to each `<span>` element. You can only use valid CSS selector character. It is possible to use both `addPrefix` and `addSuffix` together.
 
-`timer.options({ wrapEach: true, addSuffix: '--timer' })` will output:
+`timer.config({ wrapEach: true, addSuffix: '--timer' })` will output:
 
 ```html
 <div class="foo-element">
