@@ -206,6 +206,12 @@ Simply stops the timer.
 If you compile your code with Babel.js, keep in mind that `DOMtimer` makes use of [`Array.prototype.includes()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes) which won't be polyfilled by Babel. If your code runs in an environment that doesn't support this feature yet, consider adding the respective plugin [**`babel-plugin-array-includes`**](https://github.com/stoeffel/babel-plugin-array-includes) to your compilation process.
 
 
+# :scroll: Changelog
+
+* **[0.2.1]** _(2015-09-22)_ Added `wrapEach`, `addPrefix` and `addSuffix` options
+* **[0.1.1]** _(2015-09-22)_ Fixed some minor issues in `domtimer.js`
+* **[0.1.0]** _(2015-09-14)_ First release
+
 
 # :copyright: License
 The code is available under [MIT License](https://github.com/morkro/DOMtimer/blob/master/LICENSE).
