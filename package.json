@@ -2,7 +2,7 @@
   "name": "domtimer",
   "description": "An easy to import ES6 module timer for your DOM",
   "author": "Moritz Kröger <write@morkro.de> (www.morkro.de)",
-  "version": "0.1.1",
+  "version": "0.2.1",
   "keywords": [
     "es6", "es2015", "timer", "DOM", "domtimer"
   ],

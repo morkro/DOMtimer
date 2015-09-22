@@ -58,8 +58,11 @@ You can either provide an `options` object to the constructor, or later in `.con
 DOMtimer(element, {
 	interval: 1000,				// The timer updates the time every second,
 	timeFormat: '24h',			// and uses the 24-hour system, but
-	showMilliseconds: false		// doesn't show the milliseconds.
+	showMilliseconds: false,	// doesn't show the milliseconds.
 	showAbbreviation: false,	// Displaying AM/PM works only with the 12-hour system.
+	wrapEach: false,			// The output won't be wrapped in a <span>,
+	addPrefix: false,			// hence needs no prefixed class,
+	addSuffix: false			// or suffixed class.
 });
 ```
 
@@ -77,18 +80,23 @@ timer.config({
 	interval: 'milliseconds',
 	timeFormat: '12h',
 	showMilliseconds: true,
-	showAbbreviation: true
+	showAbbreviation: true,
+	wrapEach: true,
+	addPrefix: 'element__',
+	addSuffix: false
 });
 timer.run();
 ```
 
 ### `options.element`
-**Type**: `String|HTMLElement`
+**Type**: `String|HTMLElement`<br>
+**Default**: `null`
 
 The element in which you want to have the time. You can either pass a valid selector string or DOM element.
 
 ### `options.interval`
-**Type**: `String|Number`
+**Type**: `String|Number`<br>
+**Default**: `1000`
 
 This options accepts a `String` or a `Number` as argument. The number will be interpreted as **milliseconds**, means `10` would be 10ms and `1000` is one second. But it's also possible to pass a string like `second` or `minute`.
 
@@ -101,23 +109,71 @@ Here is the list of all predefined strings:
 
 
 ### `options.timeFormat`
-**Type**: `String`
+**Type**: `String`<br>
+**Default**: `24h`
 
 You can choose between the **24-hour** (`24h`) or **12-hour** (`12h`) clock.
 
 ### `options.showMilliseconds`
-**Type**: `Boolean`
+**Type**: `Boolean`<br>
+**Default**: `false`
 
 The default is set to false. If you set this to true, the timer will also display the milliseconds (hh:mm:ss.msmsms). I recommend also setting `options.interval` to a millisecond then.
 
 ### `options.showAbbreviation`
-**Type**: `Boolean`
+**Type**: `Boolean`<br>
+**Default**: `false`
 
 Adds AM and PM to the time. This will only work and make sense if `options.timeFormat` is set to `'12h'`. If set to `true` you will get your time like `10:42:01 AM`.
 
+### `options.wrapEach`
+**Type**: `Boolean`<br>
+**Default**: `false`
+
+Setting this option to `true` will wrap each time in a `<span>`.
+
+**Output**
+
+```html
+<div class="foo-element">
+    <span>10</span><span>:</span><span>05</span><span>:</span><span>10</span><span>.</span><span>598</span>
+</div>
+```
+
+### `options.addPrefix`
+**Type**: `String`<br>
+**Default**: `false`
+
+Passing any string will prefix this to each `<span>` time element. You can only use valid CSS selector character. It is possible to use both `addPrefix` and `addSuffix` together.
+
+`timer.options({ wrapEach: true, addPrefix: 'element__' })` will output:
+
+```html
+<div class="foo-element">
+    <span class="element__hours">10</span><span>:</span><span class="element__minutes">05</span><span>:</span><span class="element__seconds">10</span><span>.</span><span class="element__milliseconds">598</span>
+</div>
+```
+
+
+### `options.addSuffix`
+**Type**: `String`<br>
+**Default**: `false`
+
+Passing any string will add this to each `<span>` element. You can only use valid CSS selector character. It is possible to use both `addPrefix` and `addSuffix` together.
+
+`timer.options({ wrapEach: true, addSuffix: '--timer' })` will output:
+
+```html
+<div class="foo-element">
+    <span class="hours--timer">10</span><span>:</span><span class="minutes--timer">05</span><span>:</span><span class="seconds--timer">10</span><span>.</span><span class="milliseconds--timer">598</span>
+</div>
+```
+
+
 
 ## `.run(input?)`
-**Type**: `String`
+**Type**: `String`<br>
+**Default**: [`options.interval`](#optionsinterval)
 
 This function finally starts the timer. If you don't pass an argument, it will use either the interval from your preconfigured `options` object or default to `1000`.
 It also takes the same list of strings as in `options.interval`.
