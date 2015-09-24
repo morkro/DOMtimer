@@ -208,6 +208,7 @@ If you compile your code with Babel.js, keep in mind that `DOMtimer` makes use o
 
 # :scroll: Changelog
 
+* **[0.2.2]** _(2015-09-24)_ Fixed bug [#4](https://github.com/morkro/DOMtimer/issues/4). Calling `stop()` and `run()` after that, didn't emptied the element correctly.
 * **[0.2.1]** _(2015-09-22)_ Added `wrapEach`, `addPrefix` and `addSuffix` options
 * **[0.1.1]** _(2015-09-22)_ Fixed some minor issues in `domtimer.js`
 * **[0.1.0]** _(2015-09-14)_ First release

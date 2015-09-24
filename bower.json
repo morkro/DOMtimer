@@ -1,7 +1,7 @@
 {
   "name": "domtimer",
   "description": "An easy to import ES6 module timer for your DOM",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "moduleType": "es6",
   "keywords": [
     "es6",

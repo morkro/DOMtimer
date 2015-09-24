@@ -248,6 +248,15 @@ export default class DOMtimer {
 	}
 
 	/**
+	 * @description Removes all childNodes of 'this.elem'.
+	 */
+	clearElementContent () {
+		while (this.elem.lastChild) {
+			this.elem.removeChild(this.elem.lastChild);
+		}
+	}
+
+	/**
 	 * @description Sets the element in which the time should be displayed.
 	 * @param {String|Number} interval
 	 */
@@ -257,6 +266,8 @@ export default class DOMtimer {
 		}
 
 		if (this.hasHTMLElement()) {
+			this.clearElementContent();
+
 			if (this.wrapEach) {
 				this.appendTimeElements();
 				this.intervalFn = setInterval(this.updateTimeElements.bind(this), interval);
