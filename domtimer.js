@@ -10,28 +10,31 @@ export default class DOMtimer {
 	constructor (element, {
 		interval = 1000,
 		timeFormat = '24h',
+		showAMPM = false,
 		showAbbreviation = false,
 		showMilliseconds = false,
 		wrapEach = false,
 		addPrefix = false,
-		addSuffix = false
+		addSuffix = false,
+		updateEvent = false
     } = {}) {
-		this.elem = this.returnElement(element);
-		this.format = timeFormat;
-		this.showAbbreviation = showAbbreviation;
-		this.showMilliseconds = showMilliseconds;
 		this.intervalFn = null;
-		this.updateTime = interval;
-		this.wrapEach = wrapEach;
-		this.addPrefix = this.returnClassName(addPrefix);
-		this.addSuffix = this.returnClassName(addSuffix);
 		this.timeElements = false;
-		this.validTimes = [
-			'ms', 'millisecond',
-			'sec', 'second',
-			'min', 'minute',
-			'h', 'hour'
-		];
+		this.validTimes = ['ms','millisecond','sec','second','min','minute','h','hour'];
+		this.options = {
+			elem: this.returnElement(element),
+			timeFormat,
+			showAMPM,
+			showAbbreviation,
+			showMilliseconds,
+			updateTime: interval,
+			wrapEach,
+			addPrefix: this.returnClassName(addPrefix),
+			addSuffix: this.returnClassName(addSuffix),
+			updateEvent
+		};
+
+		this.setAMPMConfig();
 	}
 
 	/**
@@ -69,7 +72,7 @@ export default class DOMtimer {
 	 * @return {Boolean}
 	 */
 	hasHTMLElement () {
-		return !!this.elem && this.elem instanceof HTMLElement;
+		return !!this.options.elem && this.options.elem instanceof HTMLElement;
 	}
 
 	/**
@@ -77,7 +80,7 @@ export default class DOMtimer {
 	 * @return {String}
 	 */
 	getTime () {
-		let date	= new Date();
+		const date = new Date();
 		let hours = date.getHours();
 		let minutes = date.getMinutes();
 		let seconds = date.getSeconds();
@@ -85,14 +88,14 @@ export default class DOMtimer {
 		let abbreviations = '';
 
 		// If time format is set to 12h, use 12h-system.
-		if (this.format === '12h') {
-			if (this.showAbbreviation) {
+		if (this.options.timeFormat === '12h') {
+			if (this.options.showAMPM) {
 				abbreviations = ` ${this.getAbbr(hours)}`;
 			}
 			hours = (hours % 12) ? hours % 12 : 12;
 		}
 
-		// Add '0' if below 10
+		// Add '0' if below 10 or 100
 		if (hours < 10) hours = `0${hours}`;
 		if (minutes < 10) minutes = `0${minutes}`;
 		if (seconds < 10) seconds = `0${seconds}`;
@@ -120,22 +123,50 @@ export default class DOMtimer {
 	 */
 	config ({
 		element = this.returnElement(),
-		interval = this.updateTime,
-		timeFormat = this.format,
-		showAbbreviation = this.showAbbreviation,
-		showMilliseconds = this.showMilliseconds,
-		wrapEach = this.wrapEach,
-		addPrefix = this.addPrefix,
-		addSuffix = this.addSuffix
+		interval = this.options.updateTime,
+		timeFormat = this.options.format,
+		showAMPM = this.options.showAMPM,
+		showAbbreviation = this.options.showAbbreviation,
+		showMilliseconds = this.options.showMilliseconds,
+		wrapEach = this.options.wrapEach,
+		addPrefix = this.options.addPrefix,
+		addSuffix = this.options.addSuffix,
+		updateEvent = this.options.updateEvent
 	} = {}) {
-		this.elem = this.returnElement(element);
-		this.updateTime = this.returnIntervalTime(interval);
-		this.format = timeFormat;
-		this.showAbbreviation = showAbbreviation;
-		this.showMilliseconds = showMilliseconds;
-		this.wrapEach = wrapEach;
-		this.addPrefix = this.returnClassName(addPrefix);
-		this.addSuffix = this.returnClassName(addSuffix);
+		this.options = {
+			elem: this.returnElement(element),
+			timeFormat,
+			showAMPM,
+			showAbbreviation,
+			showMilliseconds,
+			updateTime: this.returnIntervalTime(interval),
+			wrapEach,
+			addPrefix: this.returnClassName(addPrefix),
+			addSuffix: this.returnClassName(addSuffix),
+			updateEvent
+		};
+
+		this.setAMPMConfig();
+	}
+
+	/**
+	 * @description Transition function as long as both options are available.
+	 *              Should be removed once 'showAbbreviation' is removed.
+	 */
+	setAMPMConfig () {
+		if (this.options.showAbbreviation) {
+			this.options.showAMPM = this.options.showAbbreviation;
+		}
+	}
+
+	/**
+	 * @description Creates custom event and dispatches it.
+	 * @param {String} eventName
+	 * @param {Object} data
+	 */
+	dispatchCustomEvent (eventName, data) {
+		const event = new CustomEvent(eventName, { detail: data ? data : {}, cancelable: true });
+		this.elem.dispatchEvent(event);
 	}
 
 	/**
@@ -145,11 +176,11 @@ export default class DOMtimer {
 		let time = this.getTime();
 		let content = `${time.hours}:${time.minutes}:${time.seconds}${time.abbreviations}`;
 
-		if (this.showMilliseconds) {
+		if (this.options.showMilliseconds) {
 			content = `${time.hours}:${time.minutes}:${time.seconds}.${time.milliseconds}${time.abbreviations}`;
 		}
 
-		this.elem.textContent = content;
+		this.options.elem.textContent = content;
 	}
 
 	/**
@@ -163,19 +194,19 @@ export default class DOMtimer {
 		let milliseconds = this.createTimeElement(time.milliseconds, 'milliseconds');
 		let ampm = this.createTimeElement(time.abbreviations, 'ampm');
 
-		this.elem.appendChild(hours);
-		this.elem.appendChild(this.createTimeElement(':'));
-		this.elem.appendChild(minutes);
-		this.elem.appendChild(this.createTimeElement(':'));
-		this.elem.appendChild(seconds);
+		this.options.elem.appendChild(hours);
+		this.options.elem.appendChild(this.createTimeElement(':'));
+		this.options.elem.appendChild(minutes);
+		this.options.elem.appendChild(this.createTimeElement(':'));
+		this.options.elem.appendChild(seconds);
 
-		if (this.showMilliseconds) {
-			this.elem.appendChild(this.createTimeElement('.'));
-			this.elem.appendChild(milliseconds);
+		if (this.options.showMilliseconds) {
+			this.options.elem.appendChild(this.createTimeElement('.'));
+			this.options.elem.appendChild(milliseconds);
 		}
 
-		if (this.showAbbreviation) {
-			this.elem.appendChild(ampm);
+		if (this.options.showAMPM) {
+			this.options.elem.appendChild(ampm);
 		}
 
 		this.timeElements = { hours, minutes, seconds, milliseconds, ampm };
@@ -189,11 +220,11 @@ export default class DOMtimer {
 		this.timeElements.minutes.textContent = time.minutes;
 		this.timeElements.seconds.textContent = time.seconds;
 
-		if (this.showMilliseconds) {
+		if (this.options.showMilliseconds) {
 			this.timeElements.milliseconds.textContent = time.milliseconds;
 		}
 
-		if (this.showAbbreviation) {
+		if (this.options.showAMPM) {
 			this.timeElements.ampm.textContent = time.abbreviations;
 		}
 	}
@@ -206,12 +237,12 @@ export default class DOMtimer {
 	createTimeElement (content, className) {
 		let span = document.createElement('span');
 
-		if (className && (this.addPrefix || this.addSuffix)) {
-			if (this.addPrefix) {
-				className = `${this.addPrefix}${className}`;
+		if (className && (this.options.addPrefix || this.options.addSuffix)) {
+			if (this.options.addPrefix) {
+				className = `${this.options.addPrefix}${className}`;
 			}
-			if (this.addSuffix) {
-				className = `${className}${this.addSuffix}`;
+			if (this.options.addSuffix) {
+				className = `${className}${this.options.addSuffix}`;
 			}
 
 			span.classList.add(className);
@@ -227,7 +258,7 @@ export default class DOMtimer {
 	 * @return {Number}
 	 */
 	returnIntervalTime (interval) {
-		let newInterval = this.updateTime;
+		let newInterval = this.options.updateTime;
 
 		if (this.validTimes.includes(interval)) {
 			if (interval.match(/^(ms|millisecond)$/)) {
@@ -251,8 +282,8 @@ export default class DOMtimer {
 	 * @description Removes all childNodes of 'this.elem'.
 	 */
 	clearElementContent () {
-		while (this.elem.lastChild) {
-			this.elem.removeChild(this.elem.lastChild);
+		while (this.options.elem.lastChild) {
+			this.options.elem.removeChild(this.options.elem.lastChild);
 		}
 	}
 
@@ -260,7 +291,7 @@ export default class DOMtimer {
 	 * @description Sets the element in which the time should be displayed.
 	 * @param {String|Number} interval
 	 */
-	run (interval = this.updateTime) {
+	run (interval = this.options.updateTime) {
 		if (typeof interval === 'string') {
 			interval = this.returnIntervalTime(interval);
 		}
@@ -268,7 +299,7 @@ export default class DOMtimer {
 		if (this.hasHTMLElement()) {
 			this.clearElementContent();
 
-			if (this.wrapEach) {
+			if (this.options.wrapEach) {
 				this.appendTimeElements();
 				this.intervalFn = setInterval(this.updateTimeElements.bind(this), interval);
 			}
@@ -278,7 +309,7 @@ export default class DOMtimer {
 			}
 		}
 		else {
-			throw new Error(`You haven't passed a valid HTMLElement: "${this.elem}"!`);
+			throw new Error(`You haven't passed a valid HTMLElement: "${this.options.elem}"!`);
 		}
 	}
 

@@ -59,7 +59,7 @@ DOMtimer(element, {
 	interval: 1000,				// The timer updates the time every second,
 	timeFormat: '24h',			// and uses the 24-hour system, but
 	showMilliseconds: false,	// doesn't show the milliseconds.
-	showAbbreviation: false,	// Displaying AM/PM works only with the 12-hour system.
+	showAMPM: false,			// Displaying AM/PM works only with the 12-hour system.
 	wrapEach: false,			// The output won't be wrapped in a <span>,
 	addPrefix: false,			// hence needs no prefixed class,
 	addSuffix: false			// or suffixed class.
@@ -80,7 +80,7 @@ timer.config({
 	interval: 'milliseconds',
 	timeFormat: '12h',
 	showMilliseconds: true,
-	showAbbreviation: true,
+	showAMPM: true,
 	wrapEach: true,
 	addPrefix: 'element__',
 	addSuffix: false
@@ -120,7 +120,7 @@ You can choose between the **24-hour** (`24h`) or **12-hour** (`12h`) clock.
 
 The default is set to false. If you set this to true, the timer will also display the milliseconds (hh:mm:ss.msmsms). I recommend also setting `options.interval` to a millisecond then.
 
-### `options.showAbbreviation`
+### `options.showAMPM`
 **Type**: `Boolean`<br>
 **Default**: `false`
 
