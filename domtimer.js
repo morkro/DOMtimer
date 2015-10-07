@@ -5,36 +5,36 @@
  * @description A nonfancy time provider.
  * @param {Object|String} element
  * @param {Object} config
+ * @example
+ * let timer = new DOMtimer('.foo-element');
+ * timer.run();
  */
 export default class DOMtimer {
-	constructor (element, {
-		interval = 1000,
-		timeFormat = '24h',
-		showAMPM = false,
-		showAbbreviation = false,
-		showMilliseconds = false,
-		wrapEach = false,
-		addPrefix = false,
-		addSuffix = false,
-		updateEvent = false
-    } = {}) {
+	constructor (element, options) {
 		this.intervalFn = null;
 		this.timeElements = false;
 		this.validTimes = ['ms','millisecond','sec','second','min','minute','h','hour'];
-		this.options = {
-			elem: this.returnElement(element),
-			timeFormat,
-			showAMPM,
-			showAbbreviation,
-			showMilliseconds,
-			updateTime: interval,
-			wrapEach,
-			addPrefix: this.returnClassName(addPrefix),
-			addSuffix: this.returnClassName(addSuffix),
-			updateEvent
-		};
+		this.options = {};
 
+		this.resolveConfig(element, options);
 		this.setAMPMConfig();
+	}
+
+	/**
+	 * @description Sets all configuration properties.
+	 * @param  {Object} config
+	 */
+	resolveConfig (element, config = {}) {
+		this.options.elem = this.returnElement(element ? element : config.element);
+		this.options.timeFormat = config.timeFormat || '24h';
+		this.options.showAMPM =  config.showAMPM || false;
+		this.options.showAbbreviation = config.showAbbreviation || false;
+		this.options.showMilliseconds = config.showMilliseconds || false;
+		this.options.updateTime = config.interval || 1000;
+		this.options.wrapEach = config.wrapEach || false;
+		this.options.addPrefix = this.returnClassName(config.addPrefix);
+		this.options.addSuffix = this.returnClassName(config.addSuffix);
+		this.options.updateEvent = config.updateEvent || false;
 	}
 
 	/**
@@ -46,6 +46,9 @@ export default class DOMtimer {
 		if (typeof name === 'string') {
 			name = name.replace(/[^-_a-zA-Z0-9]/g, '');
 		}
+		else {
+			name = false;
+		}
 
 		return name;
 	}
@@ -56,7 +59,7 @@ export default class DOMtimer {
 	 * @return {HTMLElement|null}
 	 */
 	returnElement (element) {
-		if (typeof element === 'string' && element.match(/^\./)) {
+		if (typeof element === 'string') {
 			return document.querySelector(element);
 		}
 		else if (typeof element === 'object' && element instanceof HTMLElement) {
@@ -72,7 +75,9 @@ export default class DOMtimer {
 	 * @return {Boolean}
 	 */
 	hasHTMLElement () {
-		return !!this.options.elem && this.options.elem instanceof HTMLElement;
+		return !!this.options.elem &&
+			this.options.elem instanceof HTMLElement &&
+			this.options.elem.hasOwnProperty('length');
 	}
 
 	/**
@@ -121,31 +126,8 @@ export default class DOMtimer {
 	 * @description Sets all configuration values.
 	 * @param {Object} config
 	 */
-	config ({
-		element = this.returnElement(),
-		interval = this.options.updateTime,
-		timeFormat = this.options.format,
-		showAMPM = this.options.showAMPM,
-		showAbbreviation = this.options.showAbbreviation,
-		showMilliseconds = this.options.showMilliseconds,
-		wrapEach = this.options.wrapEach,
-		addPrefix = this.options.addPrefix,
-		addSuffix = this.options.addSuffix,
-		updateEvent = this.options.updateEvent
-	} = {}) {
-		this.options = {
-			elem: this.returnElement(element),
-			timeFormat,
-			showAMPM,
-			showAbbreviation,
-			showMilliseconds,
-			updateTime: this.returnIntervalTime(interval),
-			wrapEach,
-			addPrefix: this.returnClassName(addPrefix),
-			addSuffix: this.returnClassName(addSuffix),
-			updateEvent
-		};
-
+	config (options) {
+		this.resolveConfig(options)
 		this.setAMPMConfig();
 	}
 
@@ -274,6 +256,9 @@ export default class DOMtimer {
 				newInterval = newInterval * 60 * 60;
 			}
 		}
+		else {
+			throw new Error(`Unknown parameter! Use "ms", "sec", "min" or "h".`);
+		}
 
 		return newInterval;
 	}
@@ -309,7 +294,7 @@ export default class DOMtimer {
 			}
 		}
 		else {
-			throw new Error(`You haven't passed a valid HTMLElement: "${this.options.elem}"!`);
+			throw new Error(`Invalid target! Use a valid HTMLElement.`);
 		}
 	}
 
